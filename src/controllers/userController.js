@@ -2,7 +2,7 @@ const userModel = require('../../DB/models/userModel')
 const asyncHandler = require('express-async-handler')
 
 
-
+// admin operations
 const createUser = asyncHandler(async (req, res) => {
     if (req.file) {
         // req.body.profileImage = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
@@ -65,4 +65,21 @@ const deleteUserById = asyncHandler(async (req, res) => {
     deletedUser ? res.status(200).json({ status: 'success', message: 'User deleted successfully' }) : res.status(404).json({ status: 'fail', message: 'User not found' })   
 })
 
-module.exports = {createUser,getAllUsers,getUserById,updateUserById,deleteUserById}
+
+// loggedUser operations
+const getLoggedUserProfile = asyncHandler(async (req, res) => {
+    req.params.id = req.user._id
+    getUserById(req, res)
+})
+
+const updateLoggedUserProfile = asyncHandler(async (req, res) => {
+    req.params.id = req.user._id
+    updateUserById(req, res)
+})
+
+const deleteLoggedUserProfile = asyncHandler(async (req, res) => {
+    req.params.id = req.user._id
+    deleteUserById(req, res)
+})
+
+module.exports = {createUser,getAllUsers,getUserById,updateUserById,deleteUserById,getLoggedUserProfile,updateLoggedUserProfile,deleteLoggedUserProfile}    

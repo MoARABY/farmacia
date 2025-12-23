@@ -1,4 +1,4 @@
-const {createUser,getAllUsers,getUserById,updateUserById,deleteUserById} = require('../controllers/userController') 
+const {createUser,getAllUsers,getUserById,updateUserById,deleteUserById,getLoggedUserProfile,updateLoggedUserProfile,deleteLoggedUserProfile} = require('../controllers/userController') 
 const {createUserValidator,updateUserValidator,userIdValidator} = require('../validators/userValidator')
 const {verifyToken,allowedTo} = require('../middlewares/authMiddleware')
 const router = require('express').Router()
@@ -11,5 +11,9 @@ router.route('/:id')
     .put(verifyToken, allowedTo('admin'), userIdValidator, updateUserValidator, updateUserById)
     .delete(verifyToken, allowedTo('admin'), userIdValidator, deleteUserById)
 
+router.route('/profile/me')
+    .get(verifyToken, getLoggedUserProfile)
+    .put(verifyToken, updateLoggedUserProfile)
+    .delete(verifyToken, deleteLoggedUserProfile)
 
 module.exports = router
