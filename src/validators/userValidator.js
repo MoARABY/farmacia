@@ -42,7 +42,7 @@ const createUserValidator = [
     validatorMiddleware
 ]
 
-updateUserValidator = [
+const updateUserValidator = [
     check('email')
         .optional()
         .isEmail().withMessage('Invalid email format')

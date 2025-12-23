@@ -24,10 +24,12 @@ const globalError = require('./src/middlewares/errorMiddlewares')
 // calling routes
 const userRoute = require('./src/routes/userRoute')
 const authRoute = require('./src/routes/authRoute')
+const scanRoute = require('./src/routes/scanRoute')
 
 // middlewares
 app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/scans', scanRoute)
 
 // test route
 app.get('/api', (req, res) => {
