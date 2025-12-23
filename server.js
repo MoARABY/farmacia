@@ -1,10 +1,12 @@
 const express = require('express')
 require('dotenv').config()
+const cookieParser = require('cookie-parser')
 const app = express()
 
 
 
 // built-in middlewares
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/uploads', express.static('uploads'))
@@ -17,9 +19,13 @@ const globalError = require('./src/middlewares/errorMiddlewares')
 
 // calling routes
 const userRoute = require('./src/routes/userRoute')
+const authRoute = require('./src/routes/authRoute')
 
 // middlewares
 app.use('/api/users', userRoute)
+app.use('/api/auth', authRoute)
+
+// test route
 app.get('/api', (req, res) => {
     res.status(200).json({ message: 'Welcome to farmacia APIs' })
 })
