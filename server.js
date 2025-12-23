@@ -1,6 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const cookieParser = require('cookie-parser')
+const passport = require('passport')
 const app = express()
 
 
@@ -11,6 +12,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/uploads', express.static('uploads'))
 
+// Passport (initialize)
+require('./src/config/passport')
+app.use(passport.initialize())
 
 // calling middlewares
 const connectDB = require('./DB/dbConnection')
