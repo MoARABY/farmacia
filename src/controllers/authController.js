@@ -1,4 +1,5 @@
 const userModel = require('../../DB/models/userModel')
+const generateToken = require('../utils/generateToken')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -31,4 +32,16 @@ const logout = asyncHandler(async(req,res)=>{
     res.cookie('token','',{expires:new Date(0)}).status(200).json({status:'success',message:'Logged out successfully'})
 })
 
-module.exports = {signUp,logIn,logout}
+const oauthSuccess = (req, res) => {
+    if(!req.user) {
+        return res.status(401).json({status:'fail',message:'OAuth authentication failed'})
+    }
+    const token = generateToken(req.user._id)
+    token ? res.status(200).json({status:'success',message:'OAuth successful',user:req.user,token}) : res.status(400).json({message:"Token not generated"}) 
+}
+
+const oauthFailure = (req, res) => {
+    res.status(401).json({status:'fail',message:'OAuth authentication failed'})
+}
+
+module.exports = {signUp,logIn,logout,oauthSuccess,oauthFailure}
