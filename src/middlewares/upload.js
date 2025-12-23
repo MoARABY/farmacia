@@ -5,9 +5,8 @@ const { v4: uuidv4 } = require("uuid")
 
 
 const folderMap = {
-    courtImages: "courts",
-    fawryReceipt: "bookings",
-    personalIdImage: "users",
+    profileImage: "profiles",
+    scanImage: "scans"
 };
 
 const storage = new CloudinaryStorage({
@@ -33,7 +32,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+    limits: { fileSize: 5 * 1024 * 1024 }
 })
 
 module.exports = { upload }

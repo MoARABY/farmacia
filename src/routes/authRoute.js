@@ -1,11 +1,12 @@
 const {signUp,logIn,logout,oauthSuccess,oauthFailure} = require('../controllers/authController')
 const {createUserValidator} = require('../validators/userValidator')
 const {verifyToken} = require('../middlewares/authMiddleware')
+const {upload} = require('../middlewares/upload')
 const passport = require('passport')
 const router = require('express').Router()
 
 
-router.post('/signup',createUserValidator,signUp)
+router.post('/signup',upload.single('profileImage'),createUserValidator,signUp)
 router.post('/login',logIn)
 router.get('/logout',verifyToken,logout)
 
