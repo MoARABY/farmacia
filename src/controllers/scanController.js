@@ -1,4 +1,5 @@
 const scanModel = require('../../DB/models/scanModel')
+const {sendScanToModel} = require('../services/modelService')
 const asyncHandler = require('express-async-handler')
 
 
@@ -6,8 +7,21 @@ const createScan = asyncHandler(async (req, res) => {
     if(!req.file) return  res.status(400).json({status: 'fail', message: 'Scan image is required'})
     req.body.scanImage = req.file.path
     const {scanType, scanImage} = req.body
-    const scan = await scanModel.create({scanType, scanImage, user: req.user.id,status: 'Pending'})
-    scan ? res.status(201).json({status: 'success', message: 'Scan created successfully', scan}) : res.status(400).json({status: 'fail', message: 'Scan creation failed'})  
+    const scan = await scanModel.create({scanType, scanImage, user: req.user.id,status: 'pending'})
+
+    // Send scan to ML model for prediction
+    try {
+        const result = await sendScanToModel(scanImage)
+        scan.status = 'reviewed'
+        scan.diagnosis = result.diagnosis
+        scan.confidenceScore = result.confidenceScore
+        await scan.save()
+    } catch (error) {
+        scan.status = 'failed'
+        scan.error = error.message
+        await scan.save()
+    }
+    res.status(201).json({status: 'success', message: 'Scan created successfully', scan})
 })
 
 const getScans = asyncHandler(async (req, res) => {

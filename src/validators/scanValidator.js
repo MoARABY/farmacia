@@ -1,8 +1,7 @@
-const validatorMiddleware= require('../middlewares/validatorMiddleware');
-const userModel = require('../../DB/models/userModel')
-const scanModel = require('../../DB/models/scanModel');
-const apiError = require('../utils/apiError');
-const { body,check } = require('express-validator')
+const validatorMiddleware= require('../middlewares/validatorMiddleware')
+const scanModel = require('../../DB/models/scanModel')
+const apiError = require('../utils/apiError')
+const { check } = require('express-validator')
 
 
 const createScanValidator = [
@@ -14,7 +13,7 @@ const createScanValidator = [
         .isFloat({ min: 0, max: 100 }).withMessage('Confidence score must be between 0 and 100'),
     check('status')
         .optional()
-        .isIn(['Pending', 'Reviewed', 'Completed']).withMessage('Invalid status value'),
+        .isIn(['pending', 'reviewed', 'failed']).withMessage('Invalid status value'),
     validatorMiddleware
 ]
 
@@ -27,7 +26,7 @@ const updateScanValidator = [
         .isFloat({ min: 0, max: 100 }).withMessage('Confidence score must be between 0 and 100'),
     check('status')
         .optional()
-        .isIn(['Pending', 'Reviewed', 'Completed']).withMessage('Invalid status value'),
+        .isIn(['pending', 'reviewed', 'failed']).withMessage('Invalid status value'),
     validatorMiddleware
 ]
 

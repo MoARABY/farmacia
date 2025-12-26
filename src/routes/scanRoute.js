@@ -7,7 +7,7 @@ const router = require('express').Router()
 
 router.route('/')
     .post(verifyToken, allowedTo('admin','user'), upload.single('scanImage'), createScanValidator, createScan)
-    .get(verifyToken, allowedTo('admin','user'), getScans)
+    .get(verifyToken, allowedTo('admin'), getScans)
 router.route('/my-scans')
     .get(verifyToken, allowedTo('user','admin'), getMyScans)
 router.route('/:id')
