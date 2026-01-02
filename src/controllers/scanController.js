@@ -21,23 +21,23 @@ const createScan = asyncHandler(async (req, res) => {
         scan.error = error.message
         await scan.save()
     }
-    res.status(201).json({status: 'success', message: 'Scan created successfully', scan})
+    res.status(201).json({status: 'success', message: 'Scan created successfully', data: scan})
 })
 
 const getScans = asyncHandler(async (req, res) => {
     const scans = await scanModel.find()
-    res.status(200).json({ status: 'success', results: scans.length, scans })
+    res.status(200).json({ status: 'success', results: scans.length, data: scans })
 })
 
 const getMyScans = asyncHandler(async (req, res) => {
     const scans = await scanModel.find({user: req.user.id})
-    scans.length > 0 ? res.status(200).json({ status: 'success', results: scans.length, scans }) : res.status(404).json({status: 'fail', message: 'No scans found for this user'})  
+    scans.length > 0 ? res.status(200).json({ status: 'success',message: 'Scans retrieved successfully', results: scans.length, data: scans }) : res.status(404).json({status: 'fail', message: 'No scans found for this user'})  
 })
 
 const getScanById = asyncHandler(async (req, res) => {
     const {id} = req.params
     const scan =  await scanModel.findById(id)
-    scan ? res.status(200).json({ status: 'success', scan }) : res.status(404).json({status: 'fail', message: 'Scan not found'})    
+    scan ? res.status(200).json({ status: 'success', message: 'Scan retrieved successfully', data: scan }) : res.status(404).json({status: 'fail', message: 'Scan not found'})  
 })
 
 const updateScanById = asyncHandler(async (req, res) => {
@@ -46,7 +46,7 @@ const updateScanById = asyncHandler(async (req, res) => {
         req.body.scanImage = req.file.path
     }
     const scan = await scanModel.findByIdAndUpdate(id, req.body, {new: true})
-    scan ? res.status(200).json({ status: 'success', message: 'Scan updated successfully', scan }) : res.status(404).json({status: 'fail', message: 'Scan not found'})  
+    scan ? res.status(200).json({ status: 'success', message: 'Scan updated successfully', data: scan }) : res.status(404).json({status: 'fail', message: 'Scan not found'})  
 })
 
 const deleteScanById = asyncHandler(async (req, res) => {
