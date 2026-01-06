@@ -10,8 +10,9 @@ const signUp = asyncHandler(async(req,res)=>{
     if(req.file) {
         req.body.profileImage = req.file.path
     }
-    const user = await userModel.create(req.body)
-    const {password,...others} = user._doc
+    const {name,email,phone,password,dateOfBirth,fetalDateOfBirth} = req.body
+    const user = await userModel.create({name,email,phone,password,dateOfBirth,fetalDateOfBirth,profileImage:req.body.profileImage})    
+    const {password:pwd,...others} = user._doc
     user ? res.status(201).json({status:'success',message:'user created successfully',data:others}) : res.status(400).json({status:'fail',message:'user not created'})
 })
 
