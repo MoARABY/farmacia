@@ -3,8 +3,13 @@ require('dotenv').config()
 const cookieParser = require('cookie-parser')
 const passport = require('passport')
 const app = express()
+const cors = require('cors')
+const helmet = require('helmet')
 
 
+
+
+app.use(helmet())
 
 // built-in middlewares
 app.use(cookieParser())
@@ -12,6 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/uploads', express.static('uploads'))
 
+app.use(cors())
 // Passport (initialize)
 require('./src/config/passport')
 app.use(passport.initialize())
@@ -32,6 +38,13 @@ app.use('/api/auth', authRoute)
 app.use('/api/scans', scanRoute)
 
 // test route
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'server is healthy',
+        timestamp: new Date().toISOString()
+    })
+})
 app.get('/api', (req, res) => {
     res.status(200).json({ message: 'Welcome to farmacia APIs' })
 })
