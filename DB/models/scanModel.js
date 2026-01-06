@@ -14,7 +14,7 @@ const scanSchema = new mongoose.Schema({
     scanType: {
         type: String,
         enum: ['X-Ray', 'MRI', 'CT-Scan', 'Ultrasound', 'Other'],
-        default: 'Other'
+        default: 'Ultrasound'
     },
     diagnosis: {
         type: String,

@@ -22,6 +22,12 @@ app.use(cors())
 require('./src/config/passport')
 app.use(passport.initialize())
 
+
+// Swagger Documentation
+const swaggerSetup = require('./swagger')
+swaggerSetup(app)
+
+
 // calling middlewares
 const connectDB = require('./DB/dbConnection')
 const globalError = require('./src/middlewares/errorMiddlewares')
