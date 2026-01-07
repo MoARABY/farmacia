@@ -20,22 +20,6 @@ const createUserValidator = [
             }
             return true
         }),
-    body('phone')
-        .notEmpty().withMessage('Phone number is required')
-        .isMobilePhone(['ar-EG']).withMessage('Invalid phone number')
-        .custom(async (value) => {
-            const user =  await userModel.findOne({ phone: value })
-            if (user) {
-                throw new apiError('This phone number is already registered', 400)
-            }
-            return true
-        }),
-    body('dateOfBirth')
-        .notEmpty().withMessage('Date of Birth is required')
-        .isISO8601().withMessage('Invalid date format'),
-    body('fetalDateOfBirth')
-        .notEmpty().withMessage('Fetal Date of Birth is required')
-        .isISO8601().withMessage('Invalid date format'),
     body('password')
         .notEmpty().withMessage('Password is required')
         .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),

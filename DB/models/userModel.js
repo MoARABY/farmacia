@@ -23,16 +23,13 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, 'Phone number is required'],
         unique: [true, 'this phone number is already registered']
     },
     dateOfBirth: {
-        type: Date,
-        required: [true, 'Date of Birth is required']
+        type: Date
     },
     fetalDateOfBirth: {
-        type: Date,
-        required: [true, 'Fetal Date of Birth is required']
+        type: Date
     },
     password: {
         type: String,
