@@ -37,10 +37,10 @@ router.get('/facebook/failure',oauthFailure)
  *       properties:
  *         name:
  *           type: string
- *           example: Ahmed Ali
+ *           example: Refat Rashwan
  *         email:
  *           type: string
- *           example: ahmed@example.com
+ *           example: refat@example.com
  *         password:
  *           type: string
  *           example: P@ssw0rd123
@@ -67,7 +67,7 @@ router.get('/facebook/failure',oauthFailure)
  *       properties:
  *         email:
  *           type: string
- *           example: ahmed@example.com
+ *           example: refat@example.com
  *         password:
  *           type: string
  *           example: P@ssw0rd123
