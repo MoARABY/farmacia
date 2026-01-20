@@ -38,15 +38,9 @@ const updateUserValidator = [
             return true
         }),
     check('phone')
-        .optional()
-        .isMobilePhone(['ar-EG']).withMessage('Invalid phone number')
-        .custom(async (value, { req }) => {
-            const user =  await userModel.findOne({ phone: value })
-            if (user && user._id.toString() !== req.params.id) {
-                throw new apiError('This phone number is already registered', 400)
-            }
-            return true
-        }),
+    .optional()
+    .isMobilePhone(['ar-EG']).withMessage('Invalid phone number'),
+
     check('dateOfBirth')
         .optional()
         .isISO8601().withMessage('Invalid date format'),

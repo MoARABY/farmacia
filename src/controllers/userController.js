@@ -10,9 +10,13 @@ const createUser = asyncHandler(async (req, res) => {
     }
     const { name, email, phone, dateOfBirth, fetalDateOfBirth, password, profileImage } = req.body
 
-    if (!name || !email || !phone || !dateOfBirth || !fetalDateOfBirth || !password) {
-        return res.status(400).json({ status: 'fail', message: 'All fields are required' })
-    }
+    if (!name || !email || !password) {
+    return res.status(400).json({
+        status: 'fail',
+        message: 'Name, email and password are required'
+    })
+}
+
     const user = await userModel.create({
         name,
         email,

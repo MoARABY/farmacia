@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        unique: [true, 'this phone number is already registered']
+        
     },
     dateOfBirth: {
         type: Date
