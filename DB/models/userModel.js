@@ -22,9 +22,12 @@ const userSchema = new mongoose.Schema({
         default: null
     },
     phone: {
-        type: String,
-        
-    },
+    type: String,
+    unique: true,
+    sparse: true
+    // required: false  (مش محتاجينها)
+}
+,
     dateOfBirth: {
         type: Date
     },
